@@ -1,22 +1,28 @@
+# Environment variables required for Travis build:
+# DOCKER_ID       Docker Hub username
+# DOCKER_PASSWORD Docker Hub password
+
 sudo: required
 services:
   - docker
 
 before_install:
-  - docker build -t markjhollands/react-test -f ./client/Dockerfile.dev ./client
+  # Build development image used to test
+  - docker build -t $DOCKER_ID/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run markjhollands/react-test npm test -- --coverage
+  # Run tests so that the test suite will complete after run
+  - docker run $DOCKER_ID/react-test npm test -- --coverage
 
 after_success:
-  - docker build -t markjhollands/multi-client ./client
-  - docker build -t markjhollands/multi-nginx ./nginx
-  - docker build -t markjhollands/multi-server ./server
-  - docker build -t markjhollands/multi-worker ./worker
+  - docker build -t $DOCKER_ID/multi-client ./client
+  - docker build -t $DOCKER_ID/multi-nginx ./nginx
+  - docker build -t $DOCKER_ID/multi-server ./server
+  - docker build -t $DOCKER_ID/multi-worker ./worker
   # Login to the Docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to Docker Hub
-  - docker push markjhollands/multi-client
-  - docker push markjhollands/multi-nginx
-  - docker push markjhollands/multi-server
-  - docker push markjhollands/multi-worker
+  - docker push $DOCKER_ID/multi-client
+  - docker push $DOCKER_ID/multi-nginx
+  - docker push $DOCKER_ID/multi-server
+  - docker push $DOCKER_ID/multi-worker
