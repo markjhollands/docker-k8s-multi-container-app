@@ -27,15 +27,19 @@ after_success:
   - docker push $DOCKER_ID/multi-server
   - docker push $DOCKER_ID/multi-worker
 
-deploy:
-  provider: elasticbeanstalk
-  region: ap-southeast-2
-  app: multi-docker
-  env: MultiDocker-env
-  bucket_name: elasticbeanstalk-ap-southeast-2-057706959022
-  bucket_path: docker-multi
-  on:
-    branch: master
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key:
-    secure: $AWS_SECRET_KEY
+# Deploy to Amazon Elastic Beanstalk
+# Note: Currently commented out as services were destroyed to avoid
+#       charging. Build will now report success
+
+# deploy:
+#   provider: elasticbeanstalk
+#   region: ap-southeast-2
+#   app: multi-docker
+#   env: MultiDocker-env
+#   bucket_name: elasticbeanstalk-ap-southeast-2-057706959022
+#   bucket_path: docker-multi
+#   on:
+#     branch: master
+#   access_key_id: $AWS_ACCESS_KEY
+#   secret_access_key:
+#     secure: $AWS_SECRET_KEY
