@@ -1,4 +1,4 @@
-# docker-multi-container-app
+# docker-k8s-multi-container-app
 Learning: Example Docker project made up of multiple containers. The project also includes Kubernetes config files for deployment of application to a Kubernetes platform.
 
 This project formed part of an online course on how to use Docker and Kubernetes.
